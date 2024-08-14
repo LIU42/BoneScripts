@@ -7,13 +7,13 @@ from utils import ResultUtils
 
 class ScriptDetector:
 
-    def __init__(self, config):
-        if config['device'] == 'GPU':
+    def __init__(self, configs):
+        if configs['device'] == 'GPU':
             providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']
         else:
             providers = ['CPUExecutionProvider']
 
-        self.config = config
+        self.configs = configs
         self.session = ort.InferenceSession(f'detector/weights/product/detect-{self.precision}.onnx', providers=providers)
 
     def __call__(self, image):
@@ -31,12 +31,12 @@ class ScriptDetector:
 
     @property
     def precision(self):
-        return self.config['precision']
+        return self.configs['precision']
 
     @property
     def conf_threshold(self):
-        return self.config['conf-threshold']
+        return self.configs['conf-threshold']
 
     @property
     def iou_threshold(self):
-        return self.config['iou-threshold']
+        return self.configs['iou-threshold']

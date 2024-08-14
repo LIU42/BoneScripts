@@ -7,9 +7,9 @@ from utils import MarkingUtils
 
 class ScriptIdentifier:
 
-    def __init__(self, config):
-        self.detector = ScriptDetector(config)
-        self.classifier = ScriptClassifier(config)
+    def __init__(self, configs):
+        self.detector = ScriptDetector(configs)
+        self.classifier = ScriptClassifier(configs)
 
     def __call__(self, image):
         preprocessed_image = ImageUtils.letterbox(image, size=640, padding_color=255)
