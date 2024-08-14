@@ -12,13 +12,13 @@ def load_identifier():
         return ScriptIdentifier(yaml.safe_load(configs))
 
 
-def load_sources():
-    for image_name in os.listdir('images'):
-        yield image_name, cv2.imread(f'images/{image_name}')
+def load_images():
+    for image_name in os.listdir('tests/images'):
+        yield image_name, cv2.imread(f'tests/images/{image_name}')
 
 
 def save_results(result_image, image_name):
-    cv2.imwrite(f'results/{image_name}', result_image)
+    cv2.imwrite(f'tests/results/{image_name}', result_image)
 
 
 def execute_identify(identifier, image):
@@ -37,7 +37,7 @@ def main():
     identifier = load_identifier()
     execution_times = []
 
-    for image_name, image in load_sources():
+    for image_name, image in load_images():
         result_image, execution_time = execute_identify(identifier, image)
 
         execution_times.append(execution_time)

@@ -6,13 +6,13 @@ from utils import ImageUtils
 
 class ScriptClassifier:
 
-    def __init__(self, config):
-        if config['device'] == 'GPU':
+    def __init__(self, configs):
+        if configs['device'] == 'GPU':
             providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']
         else:
             providers = ['CPUExecutionProvider']
 
-        self.config = config
+        self.configs = configs
         self.session = ort.InferenceSession(f'classifier/weights/product/classify-{self.precision}.onnx', providers=providers)
 
     def __call__(self, scripts, image):
@@ -33,8 +33,8 @@ class ScriptClassifier:
 
     @property
     def precision(self):
-        return self.config['precision']
+        return self.configs['precision']
 
     @property
     def codes(self):
-        return self.config['script-codes']
+        return self.configs['script-codes']
