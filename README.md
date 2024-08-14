@@ -1,6 +1,6 @@
 # Bone Scripts
 
-本项目取材自 2024 年 MathorCup 数学应用挑战赛 B 题，基于 YOLOv8 的甲骨文原始拓片图像单字分割识别模型。
+**本项目取材自 2024 年 MathorCup 数学应用挑战赛 B 题，基于 YOLOv8 的甲骨文原始拓片图像单字分割识别模型。**
 
 ## 项目简介
 
@@ -25,7 +25,7 @@
 字符分类模型各项指标如下：
 
 | Top1_acc | Top5_acc |
-| -------- | -------- |
+|:--------:|:--------:|
 | 0.897    | 0.969    |
 
 在 640x640 的图像输入下，采用 PyTorch 平均推理一张图片的耗时约为 190ms，采用 ONNX Runtime 推理平均耗时约为 120ms（CPU：11th Intel Core i5-1155G7 2.50GHz，Model：YOLOv8s）。
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 pip install onnxruntime-gpu
 ```
 
-将所有待识别的图像放入待识别图像目录下（待识别图像默认在 <u>images/</u> 下 ，识别结果默认保存在 <u>result/</u> 下，如果不存在请先创建），在本项目 Releases 中下载我训练好的模型权重文件，解压到项目中相应的位置，运行 main.py 即可。
+待识别图像默认在 <u>images/</u> 下 ，识别结果默认保存在 <u>result/</u> 下，如果不存在请先创建。将所有待识别的图像放入待识别图像目录下，在本项目 Releases 中下载我训练好的模型权重文件，解压到项目中相应的位置，运行 main.py 即可。
 
 ```bash
 python main.py
@@ -71,5 +71,3 @@ pip install ultralytics
 ```
 
 *<u>说明：这个项目和我另一个 [交通信号灯识别](https://github.com/LIU42/PassingRules) 的项目原理非常类似，但我还是把参赛时写的程序整理出来放在这里，未来考虑封装一个带有交互式图像预处理的识别器前端。</u>*
-
-
