@@ -1,0 +1,4 @@
+opencv-python~=4.10.0.84
+PyYAML~=6.0
+onnxruntime~=1.14.1
+numpy~=1.23.4
