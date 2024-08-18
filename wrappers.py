@@ -1,5 +1,4 @@
 class BoneScript:
-
     def __init__(self, x, y, w, h, code):
         self.x = x
         self.y = y
@@ -28,7 +27,6 @@ class BoneScript:
     
 
 class ScriptBuilder:
-
     @staticmethod
     def box(box):
         return BoneScript(box[0], box[1], box[2], box[3], None)

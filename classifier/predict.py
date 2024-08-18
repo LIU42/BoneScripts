@@ -5,7 +5,6 @@ from utils import ImageUtils
 
 
 class ScriptClassifier:
-
     def __init__(self, configs):
         if configs['device'] == 'GPU':
             providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']
@@ -24,10 +23,10 @@ class ScriptClassifier:
 
             inputs = ImageUtils.preprocess(image[y1:y2, x1:x2], size=64, padding_color=0, precision=self.precision)
 
-            outputs = self.session.run(None, {
-                'images': inputs,
-            })
-            script.code = self.codes[np.argmax(outputs[0].squeeze())]
+            outputs = self.session.run([], inputs)
+            outputs = self.postprocess(outputs)
+
+            script.code = self.codes[np.argmax(outputs)]
 
         return scripts
 
@@ -38,3 +37,7 @@ class ScriptClassifier:
     @property
     def codes(self):
         return self.configs['script-codes']
+
+    @staticmethod
+    def postprocess(outputs):
+        return outputs[0].squeeze()

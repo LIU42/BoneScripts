@@ -6,7 +6,6 @@ from utils import ResultUtils
 
 
 class ScriptDetector:
-
     def __init__(self, configs):
         if configs['device'] == 'GPU':
             providers = ['CUDAExecutionProvider', 'CPUExecutionProvider']
@@ -19,12 +18,9 @@ class ScriptDetector:
     def __call__(self, image):
         inputs = ImageUtils.convert(image, precision=self.precision)
 
-        outputs = self.session.run(None, {
-            'images': inputs,
-        })
-        outputs = outputs[0].squeeze()
-        outputs = outputs.transpose()
-        
+        outputs = self.session.run([], inputs)
+        outputs = self.postprocess(outputs)
+
         results = ResultUtils.non_max_suppression(outputs, self.conf_threshold, self.iou_threshold)
 
         return [ScriptBuilder.box(box) for box in results]
@@ -40,3 +36,7 @@ class ScriptDetector:
     @property
     def iou_threshold(self):
         return self.configs['iou-threshold']
+
+    @staticmethod
+    def postprocess(outputs):
+        return outputs[0].squeeze().transpose()

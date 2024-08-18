@@ -6,7 +6,6 @@ from utils import MarkingUtils
 
 
 class ScriptIdentifier:
-
     def __init__(self, configs):
         self.detector = ScriptDetector(configs)
         self.classifier = ScriptClassifier(configs)

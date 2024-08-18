@@ -3,7 +3,6 @@ import numpy as np
 
 
 class ImageUtils:
-
     @staticmethod
     def letterbox(image, size, padding_color):
         current_size = max(image.shape[0], image.shape[1])
@@ -26,9 +25,9 @@ class ImageUtils:
         inputs = np.expand_dims(inputs, axis=0)
 
         if precision == 'fp16':
-            return inputs.astype(np.float16)
+            return {'images': inputs.astype(np.float16)}
         else:
-            return inputs.astype(np.float32)
+            return {'images': inputs.astype(np.float32)}
         
     @staticmethod
     def preprocess(image, size, padding_color, precision):
@@ -36,7 +35,6 @@ class ImageUtils:
 
 
 class ResultUtils:
-
     @staticmethod
     def get_valid_outputs(outputs, conf_threshold):
         valid_outputs = outputs[outputs[:, 4] > conf_threshold]
@@ -58,7 +56,6 @@ class ResultUtils:
 
 
 class MarkingUtils:
-
     @staticmethod
     def script(image, script):
         x1 = script.x1
