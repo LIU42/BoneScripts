@@ -24,9 +24,7 @@ class BoneScript:
     @property
     def y2(self):
         return self.y + self.h
-    
 
-class ScriptBuilder:
     @staticmethod
-    def box(box):
+    def from_box(box):
         return BoneScript(box[0], box[1], box[2], box[3], None)

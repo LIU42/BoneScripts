@@ -1,8 +1,8 @@
-from detector import ScriptDetector
-from classifier import ScriptClassifier
+import utils.paint as paint
+import utils.preprocess as preprocess
 
-from utils import ImageUtils
-from utils import MarkingUtils
+from detect import ScriptDetector
+from classify import ScriptClassifier
 
 
 class ScriptIdentifier:
@@ -11,9 +11,9 @@ class ScriptIdentifier:
         self.classifier = ScriptClassifier(configs)
 
     def __call__(self, image):
-        preprocessed_image = ImageUtils.letterbox(image, size=640, padding_color=255)
+        preprocessed_image = preprocess.letterbox(image, size=640, padding_color=255)
 
         for script in self.classifier(self.detector(preprocessed_image), preprocessed_image):
-            MarkingUtils.script(preprocessed_image, script)
+            paint.script(preprocessed_image, script)
 
         return preprocessed_image

@@ -1,8 +1,9 @@
 import onnxruntime as ort
 
-from wrappers import ScriptBuilder
-from utils import ImageUtils
-from utils import ResultUtils
+import utils.preprocess as preprocess
+import utils.postprocess as postprocess
+
+from wrappers import BoneScript
 
 
 class ScriptDetector:
@@ -16,14 +17,14 @@ class ScriptDetector:
         self.session = ort.InferenceSession(f'detector/weights/product/detect-{self.precision}.onnx', providers=providers)
 
     def __call__(self, image):
-        inputs = ImageUtils.convert(image, precision=self.precision)
+        inputs = preprocess.convert(image, precision=self.precision)
 
         outputs = self.session.run([], inputs)
-        outputs = self.postprocess(outputs)
+        outputs = self.postprocessing(outputs)
 
-        results = ResultUtils.non_max_suppression(outputs, self.conf_threshold, self.iou_threshold)
+        results = postprocess.non_max_suppression(outputs, self.conf_threshold, self.iou_threshold)
 
-        return [ScriptBuilder.box(box) for box in results]
+        return [BoneScript.from_box(box) for box in results]
 
     @property
     def precision(self):
@@ -38,5 +39,5 @@ class ScriptDetector:
         return self.configs['iou-threshold']
 
     @staticmethod
-    def postprocess(outputs):
+    def postprocessing(outputs):
         return outputs[0].squeeze().transpose()
