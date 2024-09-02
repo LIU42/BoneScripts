@@ -1,7 +1,7 @@
 import numpy as np
 import onnxruntime as ort
 
-import utils.preprocess as preprocess
+import utils.process as process
 
 
 class ScriptClassifier:
@@ -12,7 +12,7 @@ class ScriptClassifier:
             providers = ['CPUExecutionProvider']
 
         self.configs = configs
-        self.session = ort.InferenceSession(f'classifier/weights/product/classify-{self.precision}.onnx', providers=providers)
+        self.session = ort.InferenceSession(f'classify/weights/product/classify-{self.precision}.onnx', providers=providers)
 
     def __call__(self, scripts, image):
         for script in scripts:
@@ -21,10 +21,10 @@ class ScriptClassifier:
             x2 = script.x2
             y2 = script.y2
 
-            inputs = preprocess.preprocess(image[y1:y2, x1:x2], size=64, padding_color=0, precision=self.precision)
+            inputs = process.preprocess(image[y1:y2, x1:x2], size=64, padding_color=0, precision=self.precision)
 
             outputs = self.session.run([], inputs)
-            outputs = self.postprocess(outputs)
+            outputs = self.reshape(outputs)
 
             script.code = self.codes[np.argmax(outputs)]
 
@@ -39,5 +39,5 @@ class ScriptClassifier:
         return self.configs['script-codes']
 
     @staticmethod
-    def postprocess(outputs):
+    def reshape(outputs):
         return outputs[0].squeeze()

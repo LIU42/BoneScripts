@@ -8,7 +8,7 @@ from identifier import ScriptIdentifier
 
 
 def load_identifier():
-    with open('config.yaml', 'r') as configs:
+    with open('configs/config.yaml', 'r') as configs:
         return ScriptIdentifier(yaml.safe_load(configs))
 
 
