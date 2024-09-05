@@ -26,5 +26,5 @@ class BoneScript:
         return self.y + self.h
 
     @staticmethod
-    def from_box(box):
-        return BoneScript(box[0], box[1], box[2], box[3], None)
+    def from_bbox(bbox):
+        return BoneScript(bbox[0], bbox[1], bbox[2], bbox[3], None)

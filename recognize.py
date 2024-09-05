@@ -5,7 +5,7 @@ from detect import ScriptDetector
 from classify import ScriptClassifier
 
 
-class ScriptIdentifier:
+class ScriptRecognizer:
     def __init__(self, configs):
         self.detector = ScriptDetector(configs)
         self.classifier = ScriptClassifier(configs)
@@ -14,6 +14,6 @@ class ScriptIdentifier:
         preprocessed_image = process.letterbox(image, size=640, padding_color=255)
 
         for script in self.classifier(self.detector(preprocessed_image), preprocessed_image):
-            paint.script(preprocessed_image, script)
+            paint.script_mark(preprocessed_image, script)
 
         return preprocessed_image

@@ -4,26 +4,26 @@ import statistics
 import time
 import yaml
 
-from identifier import ScriptIdentifier
+from recognize import ScriptRecognizer
 
 
-def load_identifier():
+def load_recognizer():
     with open('configs/config.yaml', 'r') as configs:
-        return ScriptIdentifier(yaml.safe_load(configs))
+        return ScriptRecognizer(yaml.safe_load(configs))
 
 
 def load_images():
-    for image_name in os.listdir('tests/images'):
-        yield image_name, cv2.imread(f'tests/images/{image_name}')
+    for image_name in os.listdir('examples/sources'):
+        yield image_name, cv2.imread(f'examples/sources/{image_name}')
 
 
 def save_results(result_image, image_name):
-    cv2.imwrite(f'tests/results/{image_name}', result_image)
+    cv2.imwrite(f'examples/outputs/{image_name}', result_image)
 
 
-def execute_identify(identifier, image):
+def execute_recognize(recognizer, image):
     counter1 = time.perf_counter()
-    results = identifier(image)
+    results = recognizer(image)
     counter2 = time.perf_counter()
 
     return results, counter2 - counter1
@@ -34,11 +34,11 @@ def average_time(execution_times):
 
 
 def main():
-    identifier = load_identifier()
+    recognizer = load_recognizer()
     execution_times = []
 
     for image_name, image in load_images():
-        result_image, execution_time = execute_identify(identifier, image)
+        result_image, execution_time = execute_recognize(recognizer, image)
 
         execution_times.append(execution_time)
         save_results(result_image, image_name)
