@@ -12,7 +12,7 @@ class ScriptClassifier:
             providers = ['CPUExecutionProvider']
 
         self.configs = configs
-        self.session = ort.InferenceSession(f'classify/weights/deploy/classify-{self.precision}.onnx', providers=providers)
+        self.session = ort.InferenceSession(f'classify/weights/classify-{self.precision}.onnx', providers=providers)
 
     def __call__(self, scripts, image):
         for script in scripts:

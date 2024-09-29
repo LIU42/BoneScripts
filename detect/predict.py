@@ -12,7 +12,7 @@ class ScriptDetector:
             providers = ['CPUExecutionProvider']
 
         self.configs = configs
-        self.session = ort.InferenceSession(f'detect/weights/deploy/detect-{self.precision}.onnx', providers=providers)
+        self.session = ort.InferenceSession(f'detect/weights/detect-{self.precision}.onnx', providers=providers)
 
     def __call__(self, image):
         inputs = process.convert_input(image, precision=self.precision)
