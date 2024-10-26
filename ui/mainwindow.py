@@ -46,13 +46,12 @@ class MainWindow(QMainWindow):
 
     @property
     def converted_output(self):
-        if self.output_image is not None:
-            data = self.output_image.data
+        data = self.output_image.data
 
-            w = self.output_image.shape[1]
-            h = self.output_image.shape[0]
+        w = self.output_image.shape[1]
+        h = self.output_image.shape[0]
 
-            return QImage(data, w, h, QImage.Format_RGB888)
+        return QImage(data, w, h, QImage.Format_RGB888)
 
     def inference(self):
         selected_path, _ = QFileDialog.getOpenFileName(self, languages.open_title, '.', languages.types_description)
