@@ -160,10 +160,7 @@ cython_debug/
 .idea
 
 .vscode/
-examples/sources/*
-examples/outputs/*
-
-*/datasets/*
-*/runs/*
-*/checkpoints/*
-*/weights/*
+checkpoints/*
+datasets/character/*
+datasets/detection/*
+inferences/models/*
