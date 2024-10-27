@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMainWindow
 
-import ui.languages as languages
+import views.languages as languages
 import inferences.inference as inference
 
 
@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         help_menu.addAction(self.exit_action)
 
     @property
-    def converted_output(self):
+    def converted_output_image(self):
         data = self.output_image.data
 
         w = self.output_image.shape[1]
@@ -79,12 +79,8 @@ class MainWindow(QMainWindow):
             self.save_action.setEnabled(True)
 
     def paintEvent(self, _):
-        painter = QPainter(self)
-
         if self.output_image is not None:
-            scaled_image = self.converted_output.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            image = self.converted_output_image.scaled(self.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
 
-            x = (self.width() - scaled_image.width()) // 2
-            y = (self.height() - scaled_image.height()) // 2
-
-            painter.drawImage(x, y, scaled_image)
+            painter = QPainter(self)
+            painter.drawImage((self.width() - image.width()) // 2, (self.height() - image.height()) // 2, image)
